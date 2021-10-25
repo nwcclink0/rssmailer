@@ -1,0 +1,3 @@
+# rssmailer
+
+RssMailer frontend.

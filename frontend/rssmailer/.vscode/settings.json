@@ -1,0 +1,44 @@
+{
+	"dart.flutterSdkPath": ".fvm/flutter_sdk",
+	// Remove .fvm files from search
+	"search.exclude": {
+	  "**/.fvm": true
+	},
+	// Remove from file watching
+	"files.watcherExclude": {
+	  "**/.fvm": true
+	},
+	"dart.devToolsBrowser": "default",
+    "dart.flutterCreateAndroidLanguage": "java",
+    "dart.flutterCreateIOSLanguage": "objc",
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [
+            120
+        ],
+        "editor.selectionHighlight": false,
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.suggestSelection": "first",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": false
+    },
+    // "workbench.colorTheme": "One Dark Pro",
+    "dart.debugExternalLibraries": true,
+    "dart.debugSdkLibraries": false,
+    "terminal.integrated.fontSize": 13,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.cursorStyle": "line",
+    "editor.insertSpaces": false,
+    "editor.lineNumbers": "on",
+    "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+    "editor.wordWrap": "off",
+    "editor.fontSize": 12,
+    "[rust]": {
+        "editor.formatOnSave": true 
+    },
+    "keyboard.dispatch": "keyCode",
+    "extensions.supportUntrustedWorkspaces": {
+    
+    }
+  }
