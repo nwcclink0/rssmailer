@@ -1,0 +1,42 @@
+[package]
+name = "rssmailer"
+version = "0.1.0"
+authors = ["yuantingwei <yuantingwei@arcsparrow.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rss = "1.0"
+reqwest = { version = "0.11", features = ["json"] }
+tokio = { version = "1", features = ["full"] }
+tokio-test = "0.4.2"
+lettre = "0.10.0-rc.3"
+maud = "0.22.2"
+chrono = "0.4"
+# rustls= "0.19.1"
+openssl = "0.10.36"
+actix-web = { version = "4.0.1", features = ["openssl"] }
+actix-test = "0.1.0-beta.3"
+actix-cors = "0.6.0-beta.2"
+env_logger = "0.9.0"
+serde = { version = "1.0.126", features = ["derive"] }
+serde_json = "1.0.64"
+sqlx = { version = "0.5" , features = ["postgres", "offline", "runtime-tokio-native-tls", "uuid", "time"] }
+uuid = { version = "0.8.2", features = ["v4", "serde"] }
+time = { version= "0.2.16", features = ["serde"]}
+strum = {version = "0.21", features = ["derive"]} 
+strum_macros = "0.21"
+argon2 = "0.3.0"
+rand_core = { version = "0.6", features = ["std"] }
+jsonwebtoken = "7.2.0"
+anyhow = "1"
+dotenv = "0.15.0"
+dotenv_codegen = "0.15.0"
+dotenv_codegen_implementation = "0.15.0"
+otpauth = "0.4"
+ctrlc = { version = "3.0", features = ["termination"] }
+
+[dev-dependencies]
+actix-rt = "2.2.0"
+
