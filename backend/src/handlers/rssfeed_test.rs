@@ -56,7 +56,7 @@ async fn test_rssfeed_post() -> Result<(), Box<dyn std::error::Error>> {
     assert!(response.status().is_success());
     let add_account = response.json::<AccountInfo>().await.unwrap();
 
-    let query_path = "/account/send_verify_email_code";
+    let query_path = "/send_verify_email_code";
     let mut response = srv
         .post(query_path.clone())
         .send_json(&AccountSendVerifyEmailCodeRequest {
