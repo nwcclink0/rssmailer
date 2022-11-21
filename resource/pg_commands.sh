@@ -5,6 +5,7 @@ display_usage() {
  echo "-l login postgrsql database"
  echo "-t create table"
  echo "-r sqlx migrate run"
+ echo "-d reset database"
  echo "-h help"
 }
 
@@ -46,6 +47,12 @@ create_db() {
   DATABASE_URL=postgres://localhost/rssmailer sqlx database create
 }
 
+reset_database() {
+  sqlx database drop
+  DATABASE_URL=postgres://localhost/rssmailer sqlx database create
+  sqlx migrate run
+}
+
 while [ -n "$1" ]; do 
     case "$1" in
     -s)
@@ -65,7 +72,13 @@ while [ -n "$1" ]; do
         shift
         ;;
     -r)
-        migra
+        run_migrate
+        shift
+        ;;
+    -d)
+        reset_database
+        shift
+        ;;
     *)
         echo " Option $1 not recognized";;
     esac
