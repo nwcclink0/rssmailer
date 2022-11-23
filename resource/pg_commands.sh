@@ -48,9 +48,9 @@ create_db() {
 }
 
 reset_database() {
-  sqlx database drop
+  DATABASE_URL=postgres://localhost/rssmailer sqlx database drop
   DATABASE_URL=postgres://localhost/rssmailer sqlx database create
-  sqlx migrate run
+  DATABASE_URL=postgres://localhost/rssmailer sqlx migrate run
 }
 
 while [ -n "$1" ]; do 

@@ -40,10 +40,10 @@ jobs:
             echo "${{ secrets.ENV_FILE }}" > .env
 
     - name:
-      working-directory: ./resource
+      working-directory: ./backend
       run: |
         cargo install sqlx-cli --no-default-features --features native-tls,postgres
-        bash pg_commands.sh -d
+        bash ../resource/pg_commands.sh -d
 
     - name: Build
       working-directory: ./backend
