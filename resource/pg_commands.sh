@@ -48,9 +48,11 @@ create_db() {
 }
 
 reset_database() {
-  DATABASE_URL=postgres://localhost/rssmailer?user=$POSTGRES_USER&password=$POSTGRES_PASSWORD sqlx database drop
-  DATABASE_URL=postgres://localhost/rssmailer?user=$POSTGRES_USER&password=$POSTGRES_PASSWORD sqlx database create
-  DATABASE_URL=postgres://localhost/rssmailer?user=$POSTGRES_USER&password=$POSTGRES_PASSWORD sqlx migrate run
+  echo "user:" $POSTGRES_USER
+  echo "password:" $POSTGRES_PASSWORD
+  DATABASE_URL=postgres://localhost?dbname=rssmailer&user=$POSTGRES_USER&password=$POSTGRES_PASSWORD sqlx database drop
+  DATABASE_URL=postgres://localhost?dbname=rssmailer&user=$POSTGRES_USER&password=$POSTGRES_PASSWORD sqlx database create
+  DATABASE_URL=postgres://localhost?dbname=rssmailer&user=$POSTGRES_USER&password=$POSTGRES_PASSWORD sqlx migrate run
 }
 
 while [ -n "$1" ]; do 
