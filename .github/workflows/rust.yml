@@ -44,6 +44,9 @@ jobs:
       run: |
         cargo install sqlx-cli --no-default-features --features native-tls,postgres
         bash ../resource/pg_commands.sh -d
+      env:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
 
     - name: Build
       working-directory: ./backend
