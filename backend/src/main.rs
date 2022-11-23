@@ -19,7 +19,6 @@ pub mod db;
 pub mod handlers;
 pub mod services;
 use handlers::account::*;
-use handlers::account::send_verify_email_code;
 use handlers::index::index;
 use handlers::rssfeed::*;
 use handlers::error::*;
