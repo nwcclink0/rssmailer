@@ -22,6 +22,9 @@ then
 fi
 
 
+DATABASE_URL=postgres://$POSTGRES_HOSTNAME?dbname=rssmailer&user=$POSTGRES_USER&password=$POSTGRES_PASSWORD 
+
+
 start_db() {
   pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres -l /home/linuxbrew/.linuxbrew/var/postgres/server.log start
 }
@@ -31,7 +34,7 @@ stop_db() {
 }
 
 login_db() {
-  psql -U yt rssmailer
+  psql -U $POSTGRES_USER rssmailer
 }
 
 create_table() {
@@ -44,15 +47,13 @@ run_migrate() {
 }
 
 create_db() {
-  DATABASE_URL=postgres://localhost/rssmailer sqlx database create
+  sqlx database create
 }
 
 reset_database() {
-  echo "user:" $POSTGRES_USER
-  echo "password:" $POSTGRES_PASSWORD
-  DATABASE_URL=postgres://localhost?dbname=rssmailer&user=$POSTGRES_USER&password=$POSTGRES_PASSWORD sqlx database drop
-  DATABASE_URL=postgres://localhost?dbname=rssmailer&user=$POSTGRES_USER&password=$POSTGRES_PASSWORD sqlx database create
-  DATABASE_URL=postgres://localhost?dbname=rssmailer&user=$POSTGRES_USER&password=$POSTGRES_PASSWORD sqlx migrate run
+  sqlx database drop
+  sqlx database create
+  sqlx migrate run
 }
 
 while [ -n "$1" ]; do 
