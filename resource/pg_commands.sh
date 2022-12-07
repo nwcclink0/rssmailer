@@ -22,7 +22,7 @@ then
 fi
 
 
-DATABASE_URL=postgres://$POSTGRES_HOSTNAME?dbname=rssmailer&user=$POSTGRES_USER&password=$POSTGRES_PASSWORD 
+DATABASE_URL="postgres://$POSTGRES_HOSTNAME?dbname=rssmailer&user=$POSTGRES_USER&password=$POSTGRES_PASSWORD"
 
 
 start_db() {
@@ -51,6 +51,7 @@ create_db() {
 }
 
 reset_database() {
+  echo "database url:" $DATABASE_URL
   sqlx database drop
   sqlx database create
   sqlx migrate run
