@@ -40,9 +40,9 @@ async fn test_rssfeed_post() -> Result<(), Box<dyn std::error::Error>> {
             .service(post_rssfeeds)
     });
 
-    let add_account_email = "account@email.com".clone();
-    let add_account_nickname = "fakennickame".clone();
-    let add_account_password = "fakepassword".clone();
+    let add_account_email = "account@email.com";
+    let add_account_nickname = "fakennickame";
+    let add_account_password = "fakepassword";
     let add_account_path = "/account/add".to_owned();
     let mut response = srv
         .post(add_account_path.clone())
@@ -58,7 +58,7 @@ async fn test_rssfeed_post() -> Result<(), Box<dyn std::error::Error>> {
 
     let query_path = "/send_verify_email_code";
     let mut response = srv
-        .post(query_path.clone())
+        .post(query_path)
         .send_json(&AccountSendVerifyEmailCodeRequest {
             email: add_account_email.to_owned(),
         })

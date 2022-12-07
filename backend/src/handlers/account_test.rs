@@ -38,9 +38,9 @@ async fn test_account_post() -> Result<(), Box<dyn std::error::Error>> {
             .service(send_verify_email_code)
             .service(verify_email)
     });
-    let add_account_email = dotenv!("TEST_ACCOUNT").clone();
-    let add_account_nickname = "fakennickame".clone();
-    let add_account_password = "fakepassword".clone();
+    let add_account_email = dotenv!("TEST_ACCOUNT");
+    let add_account_nickname = "fakennickame";
+    let add_account_password = "fakepassword";
     let add_account_path = "/account/add".to_owned();
     let mut response = srv
         .post(add_account_path.clone())
@@ -56,7 +56,7 @@ async fn test_account_post() -> Result<(), Box<dyn std::error::Error>> {
 
     let query_path = "/send_verify_email_code";
     let mut response = srv
-        .post(query_path.clone())
+        .post(query_path)
         .send_json(&AccountSendVerifyEmailCodeRequest {
             email: add_account_email.to_owned(),
         })
@@ -134,7 +134,7 @@ async fn test_account_post() -> Result<(), Box<dyn std::error::Error>> {
     assert_eq!(account_id, add_account.id.clone());
 
     let account_nickname = json_response.account.nickname.clone();
-    assert_eq!(account_nickname, edit_nickname.clone());
+    assert_eq!(account_nickname, edit_nickname);
 
     let account_email = json_response.account.email.clone();
     assert_eq!(account_email, edit_email.to_owned());

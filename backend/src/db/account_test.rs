@@ -21,7 +21,6 @@ async fn test_account() -> Result<(), sqlx::Error> {
     let password = K_ACCOUNT_PASSWORD;
     let edit_email = K_ACCOUNT_EDIT_EMAIL;
     let edit_nickname = K_ACCOUNT_NICKNAME;
-    let mut account_id = "".to_owned();
 
     let new_id = Uuid::new_v4();
     add_account(
@@ -32,42 +31,50 @@ async fn test_account() -> Result<(), sqlx::Error> {
         password.to_string(),
     )
     .await?;
-    let accounts = fetch_accounts(&pool).await?;
-    assert_eq!(accounts.len(), 1);
-    assert_eq!(nickname, accounts[0].nickname);
-    assert_eq!(email, accounts[0].email);
-    assert_eq!(false, accounts[0].activated);
+    let account = fetch_account(&pool, new_id).await;
+    let account = match account {
+        Ok(a) => a,
+        Err(e) => return Err(e),
+    };
 
-    let validate = validate_credentials(&pool, accounts[0].id, password.to_string()).await;
-    assert_eq!(validate, true);
+    assert_eq!(nickname, account.nickname);
+    assert_eq!(email, account.email);
+    assert!(!account.activated);
 
-    let account = fetch_account_info(&pool, accounts[0].id).await?;
+    let validate = validate_credentials(&pool, account.id, password.to_string()).await;
+    assert!(validate);
+
+    let account = fetch_account_info(&pool, account.id).await?;
     assert_eq!(nickname, account.nickname);
     assert_eq!(email, account.email);
 
     edit_account(
         &pool,
-        accounts[0].id.to_string(),
+        account.id.to_string(),
         edit_email.to_string(),
         edit_nickname.to_string(),
     )
     .await?;
-    let accounts = fetch_accounts(&pool).await?;
-    assert_eq!(accounts.len(), 1);
-    assert_eq!(edit_email, accounts[0].email);
-    assert_eq!(edit_nickname, accounts[0].nickname);
+    let account = fetch_account(&pool, account.id).await;
+    let account = match account {
+        Ok(a) => a,
+        Err(e) => return Err(e),
+    };
+    assert_eq!(edit_email, account.email);
+    assert_eq!(edit_nickname, account.nickname);
 
-    account_id = accounts[0].id.to_string().clone();
+    let account_id = account.id.to_string();
 
-    let accounts = fetch_accounts(&pool).await?;
-    assert_eq!(accounts.len(), 1);
-    activated_account(&pool, accounts[0].id.to_string()).await?;
-    let accounts = fetch_accounts(&pool).await?;
-    assert_eq!(accounts.len(), 1);
-    assert_eq!(accounts[0].activated, true);
+    activated_account(&pool, account.id.to_string()).await?;
+    let account = fetch_account(&pool, account.id).await;
+    let account = match account {
+        Ok(a) => a,
+        Err(e) => return Err(e),
+    };
+    assert!(account.activated);
 
     delete_account(&pool, account_id.to_string()).await?;
-    let accounts = fetch_accounts(&pool).await?;
-    assert_eq!(accounts.len(), 0);
+    let err = fetch_account(&pool, account.id).await.unwrap_err();
+    println!("{}", err);
     Ok(())
 }

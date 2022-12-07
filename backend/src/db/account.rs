@@ -92,7 +92,7 @@ pub async fn delete_account(pool: &PgPool, id: String) -> Result<(), sqlx::Error
     Ok(())
 }
 
-async fn fetch_account(pool: &PgPool, id: uuid::Uuid) -> Result<Account, sqlx::Error> {
+pub async fn fetch_account(pool: &PgPool, id: uuid::Uuid) -> Result<Account, sqlx::Error> {
     let command = format!("select * from account where id = '{}'", id);
     let row: Result<Account, sqlx::Error> = sqlx::query_as(command.as_str()).fetch_one(pool).await;
     match row {
